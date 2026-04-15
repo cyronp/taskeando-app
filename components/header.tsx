@@ -8,7 +8,6 @@ interface HeaderProps {
 }
 
 export default function Header({ workspace, onCreateTask }: HeaderProps) {
-  const [IsActive, setIsActive] = useState(false);
   return (
     <>
       <div className="flex px-10 py-2 items-center justify-between">
