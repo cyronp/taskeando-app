@@ -14,7 +14,7 @@ export default function Header({ workspace }: HeaderProps) {
           <h1 className="text-indigo-500 text-4xl font-bold">Taskeando</h1>
           {/* Workspace */}
           <div>
-            <h2 className="text-xl font-semibold">Workspace: {workspace}<Button className="hover:bg-transparent cursor-pointer" size="icon" variant="ghost"><ChevronDown/></Button></h2>
+            <h2 className="text-xl font-semibold text-neutral-700">Workspace: {workspace}<Button className="hover:bg-transparent cursor-pointer" size="icon" variant="ghost"><ChevronDown/></Button></h2>
           </div>
         </div>
         {/* Buttons Group */}
