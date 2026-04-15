@@ -1,10 +1,12 @@
 interface CardContainerTitleProps {
+  id: string;
   title?: string;
   color?: string;
   quantity?: string;
 }
 
 export default function CardContainerTitle({
+  id,
   title,
   color,
   quantity,
