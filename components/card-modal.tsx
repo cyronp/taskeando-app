@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectVa
 import { boardSeed } from "../lib/board-seed";
 import Card from "./card";
 import { useState } from "react";
+import CardContainer from "./card-container";
 
 export default function CardModal({closeModal}:CardModalProps){
     const [activeTitle, setActiveTitle] = useState('')
@@ -48,14 +49,14 @@ export default function CardModal({closeModal}:CardModalProps){
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="card-date">Data de finalização da task</FieldLabel>
-                        <Input id="card-date" type="date" placeholder="Insira a data de finalização da task" onChange={(e) => {setActiveDate(e.target.value)}}></Input>
+                        <Input id="card-date" type="date" placeholder="Insira a data de finalização da task" onChange={(e) => {setActiveDate(e.target.value)}} pattern="\d{2}-\d{2}-\d{4}"></Input>
                     </Field>
                 </form>
                 <div className="flex gap-2 pt-4">
-                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1">Criar task</Button>
+                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar task</Button>
                 </div>
-                <div>
-                    <h1 className="text-sm font-medium">Preview</h1>
+                <div className="flex flex-col mt-2">
+                    <h1 className="text-sm font-medium mb-2">Preview</h1>
                     <Card title={activeTitle} description={activeDescription} date={activeDate} />
                 </div>
             </div>

@@ -30,12 +30,12 @@ export default function ColumnModal({closeColumnModal}:CardModalProps){
                         <Input type="color" onChange={(e) => setActiveColor(e.target.value)}></Input>
                     </Field>
                 </form>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col mt-2">
                     <h1 className="text-sm font-medium">Preview</h1>
                     <CardContainerTitle color={activeColor} title={activeTitle} quantity="999"/>
                 </div>
                 <div className="flex gap-2 pt-4">
-                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1">Criar coluna</Button>
+                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar coluna</Button>
                 </div>
             </div>
         </>
