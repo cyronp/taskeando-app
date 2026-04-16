@@ -1,5 +1,11 @@
 interface CardModalProps{
     closeModal: () => void;
+    columns: { id: string | number; title: string }[];
+    onCreateCard: (input: {
+        idColumn: string | number;
+        title: string;
+        description: string;
+        date: string; }) => void;
 }
 
 import { X } from "lucide-react";
@@ -7,15 +13,31 @@ import { Button } from "./ui/button";
 import { Field, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue, SelectGroup } from "./ui/select";
-import { boardSeed } from "../lib/board-seed";
 import Card from "./card";
 import { useState } from "react";
-import CardContainer from "./card-container";
+import { formatCardDate } from "@/app/utils/create-card";
 
-export default function CardModal({closeModal}:CardModalProps){
+export default function CardModal({closeModal, columns, onCreateCard}:CardModalProps){
+    const [activeColumnId, setActiveColumnId] = useState(String(columns[0]?.id ?? ""))
     const [activeTitle, setActiveTitle] = useState('')
     const [activeDescription, setActiveDescription] = useState('')
     const [activeDate, setActiveDate] = useState('')
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (!activeColumnId || !activeTitle.trim() || !activeDescription.trim() || !activeDate) {
+            return;
+        }
+
+        onCreateCard({
+            idColumn: activeColumnId,
+            title: activeTitle.trim(),
+            description: activeDescription.trim(),
+            date: activeDate,
+        });
+    }
+
     return(
         <>
             <div className="absolute bg-white right-12 top-16 p-6 border rounded-md w-[20%]">
@@ -24,17 +46,17 @@ export default function CardModal({closeModal}:CardModalProps){
                     <X/>
                 </Button>
                 </div>
-                <form id="add-card" className="flex flex-col gap-2">
+                <form id="add-card" className="flex flex-col gap-2" onSubmit={handleSubmit}>
                     <Field>
                         <FieldLabel>Selecione a coluna desejada</FieldLabel>
-                        <Select>
+                        <Select value={activeColumnId} onValueChange={setActiveColumnId}>
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Selecione a coluna"/>
                         </SelectTrigger>
                         <SelectContent position="popper">
                             <SelectGroup>
                                 <SelectLabel>Colunas</SelectLabel>
-                                {boardSeed.map((column) => <SelectItem key={column.title} value={column.title}>{column.title}</SelectItem>)}
+                                {columns.map((column) => <SelectItem key={String(column.id)} value={String(column.id)}>{column.title}</SelectItem>)}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -51,13 +73,13 @@ export default function CardModal({closeModal}:CardModalProps){
                         <FieldLabel htmlFor="card-date">Data de finalização da task</FieldLabel>
                         <Input id="card-date" type="date" placeholder="Insira a data de finalização da task" onChange={(e) => {setActiveDate(e.target.value)}} pattern="\d{2}-\d{2}-\d{4}"></Input>
                     </Field>
+                    <div className="flex gap-2 pt-4">
+                        <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar task</Button>
+                    </div>
                 </form>
-                <div className="flex gap-2 pt-4">
-                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar task</Button>
-                </div>
                 <div className="flex flex-col mt-2">
                     <h1 className="text-sm font-medium mb-2">Preview</h1>
-                    <Card title={activeTitle} description={activeDescription} date={activeDate} />
+                    <Card title={activeTitle} description={activeDescription} date={formatCardDate(activeDate)} />
                 </div>
             </div>
         </>

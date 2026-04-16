@@ -1,5 +1,6 @@
 interface CardModalProps{
     closeColumnModal: () => void;
+    onCreateCategory: (input: { title: string; color: string }) => void;
 }
 
 import { X } from "lucide-react";
@@ -9,9 +10,23 @@ import { Input } from "./ui/input";
 import CardContainerTitle from "./card-container-title";
 import { useState } from "react";
 
-export default function ColumnModal({closeColumnModal}:CardModalProps){
-    const [activeColor, setActiveColor] = useState('')
+export default function ColumnModal({closeColumnModal, onCreateCategory}:CardModalProps){
+    const [activeColor, setActiveColor] = useState('#7C8DA6')
     const [activeTitle, setActiveTitle] = useState('')
+
+    function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (!activeTitle.trim()) {
+            return;
+        }
+
+        onCreateCategory({
+            title: activeTitle,
+            color: activeColor,
+        });
+    }
+
     return(
         <>
             <div className="absolute bg-white right-12 top-16 p-6 border rounded-md w-[20%]">
@@ -20,22 +35,22 @@ export default function ColumnModal({closeColumnModal}:CardModalProps){
                     <X/>
                 </Button>
                 </div>
-                <form id="add-column" className="flex flex-col gap-2">
+                <form id="add-column" className="flex flex-col gap-2" onSubmit={handleSubmit}>
                     <Field>
                         <FieldLabel htmlFor="column-title">Titulo da coluna</FieldLabel>
                         <Input id="column-title" type="text" placeholder="Insira o titulo da task" onChange={(e) => setActiveTitle(e.target.value)}></Input>
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="column-color">Selecione a cor da coluna</FieldLabel>
-                        <Input type="color" onChange={(e) => setActiveColor(e.target.value)}></Input>
+                        <Input id="column-color" type="color" value={activeColor} onChange={(e) => setActiveColor(e.target.value)}></Input>
                     </Field>
+                    <div className="flex gap-2 pt-4">
+                        <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar coluna</Button>
+                    </div>
                 </form>
                 <div className="flex flex-col mt-2">
                     <h1 className="text-sm font-medium">Preview</h1>
                     <CardContainerTitle color={activeColor} title={activeTitle} quantity="999"/>
-                </div>
-                <div className="flex gap-2 pt-4">
-                    <Button type="submit" className="bg-indigo-500 cursor-pointer flex-1 py-5">Criar coluna</Button>
                 </div>
             </div>
         </>

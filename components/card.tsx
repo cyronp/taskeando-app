@@ -1,14 +1,28 @@
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { DropdownMenuTrigger, DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem } from "./ui/dropdown-menu";
+import {
+  DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "./ui/dropdown-menu";
 
 interface CardProps {
+  id: string | number;
   title?: string;
   description?: string;
   date?: string;
+  removeCard?: (id: string | number) => void;
 }
 
-export default function Card({ title, description, date }: CardProps) {
+export default function Card({
+  id,
+  title,
+  description,
+  date,
+  removeCard,
+}: CardProps) {
   return (
     <div className="min-w-0 border rounded-xl p-4 shadow-md">
       <div className="min-w-0 flex flex-col">
@@ -24,8 +38,17 @@ export default function Card({ title, description, date }: CardProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuGroup>
-                <DropdownMenuItem><PencilIcon/>Editar</DropdownMenuItem>
-                <DropdownMenuItem variant="destructive"><TrashIcon/>Deletar</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <PencilIcon />
+                  Editar
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={() => removeCard?.(id)}
+                >
+                  <TrashIcon />
+                  Deletar
+                </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
