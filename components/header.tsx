@@ -5,9 +5,10 @@ import { useState } from "react";
 interface HeaderProps {
   workspace?: string;
   onCreateTask: () => void;
+  onCreateColumn: () => void;
 }
 
-export default function Header({ workspace, onCreateTask }: HeaderProps) {
+export default function Header({ workspace, onCreateTask, onCreateColumn }: HeaderProps) {
   return (
     <>
       <div className="flex px-10 py-2 items-center justify-between">
@@ -21,7 +22,7 @@ export default function Header({ workspace, onCreateTask }: HeaderProps) {
         </div>
         {/* Buttons Group */}
         <div className="flex gap-4">
-          <Button className="bg-indigo-500 rounded-lg p-6 text-base font-bold cursor-pointer">Criar categoria</Button>
+          <Button className="bg-indigo-500 rounded-lg p-6 text-base font-bold cursor-pointer" onClick={onCreateColumn}>Criar categoria</Button>
           <Button className="bg-indigo-500 rounded-lg p-6 text-base font-bold cursor-pointer" onClick={onCreateTask}>Criar task</Button>
         </div>
       </div>

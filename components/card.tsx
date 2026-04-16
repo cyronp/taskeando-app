@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 interface CardProps {
   title?: string;
-  description?: string;
+    description?: string;
   date?: string;
 }
 

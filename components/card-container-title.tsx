@@ -1,5 +1,5 @@
 interface CardContainerTitleProps {
-  id: string;
+  id?: string;
   title?: string;
   color?: string;
   quantity?: string;
@@ -17,12 +17,12 @@ export default function CardContainerTitle({
       style={{ backgroundColor: `${color}80` }}
     >
       <h1 className="font-bold truncate">{title}</h1>
-      <h2
+      { quantity && <h2
         className="px-2 rounded-sm text-white"
         style={{ backgroundColor: color }}
       >
         {quantity}
-      </h2>
+      </h2>}
     </div>
   );
 }
